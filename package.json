@@ -1,14 +1,14 @@
 {
-  "name": "auth-i-guided",
+  "name": "webauth-i-challenge",
   "version": "1.0.0",
-  "description": "Web Auth I Guided Project",
+  "description": "webauth-i-challenge",
   "main": "index.js",
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "Lambda School",
+  "author": "Benjamin Grabow",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
