@@ -1,12 +1,32 @@
 const express = require('express');
 const bcrypt = require("bcryptjs");
-
-const db = require('./database/dbConfig.js');
+const session = require('express-session');
+const KnexSessionStore = require('connect-session-knex')(session);
 const Users = require('./users/users-model.js');
 
 const server = express();
 
+const sessionConfig = {
+  name: 'Ben', // by default sid
+  secret: 'keep  it secret, keep it safe',
+  resave: false, // if there are no changes to the session don't save it.
+  saveUninitialized: true, // for GDPR compliance
+  cookie: {
+    maxAge: 1000 * 60 * 10, // millisec
+    secure: false,
+    httpOnly: true,
+  },
+  store: new KnexSessionStore({
+    knex: require('./database/dbConfig'),
+    tablename: 'sessions',
+    sidfieldname: 'sid',
+    createTable: true,
+    clearInterval: 1000 * 60 * 30,
+  }),
+}
+
 server.use(express.json());
+server.use(session(sessionConfig));
 
 server.get('/', (req, res) => {
   res.send("It's alive!");
@@ -50,6 +70,8 @@ server.get('/api/users', (req, res) => {
     })
     .catch(err => res.send(err));
 });
+
+server.delete('')
 
 
 module.exports = server;
