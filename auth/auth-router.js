@@ -17,7 +17,7 @@ router.post('/register', (req, res) => {
   });
 });
 
-router.post('/api/login', (req, res) => {
+router.post('/login', (req, res) => {
   let { username, password } = req.body;
 
   Users.findBy({ username })
@@ -35,10 +35,11 @@ router.post('/api/login', (req, res) => {
     });
 });
 
-server.delete('/api/logout', (req, res) => {
+router.delete('/logout', (req, res) => {
   if(req.session) {
     req.session.destroy();
   }
+res.status(200).json({ message: 'good bye' });
 });
 
 module.exports = router;
